@@ -59,6 +59,7 @@ namespace KrispyKreme.Application.Services.Implementation
             var sales = await _saleRepository.GetAllAsync();
             return sales.Select(s => new GetSaleDto
             {
+                Id = s.Id,
                 CustomerName = s.Customer.Name,
                 CustomerAddress = s.Customer.Address,
                 DoughnutName = s.Doughnut.Name,

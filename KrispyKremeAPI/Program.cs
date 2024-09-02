@@ -42,6 +42,17 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<JwtGenerator>();
@@ -64,6 +75,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 app.UseAuthentication();

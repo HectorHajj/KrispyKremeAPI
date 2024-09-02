@@ -2,6 +2,7 @@
 using KrispyKreme.Application.Helpers;
 using KrispyKreme.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace KrispyKreme.API.Controllers
 {
@@ -39,13 +40,21 @@ namespace KrispyKreme.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await customerService.AddCustomerAsync(customerDto);
-            if (result)
+            try
             {
-                return Ok(new { Message = "User registered successfully" });
-            }
+                var result = await customerService.AddCustomerAsync(customerDto);
+                if (result)
+                {
+                    return Ok(new { Message = "User registered successfully" });
+                }
 
-            return BadRequest(ModelState);
+                return BadRequest(new { Message = "Failed to register user" });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { message = "An error occurred while registering the user.", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -56,29 +65,35 @@ namespace KrispyKreme.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
         {
-            // Find user by email
-            var user = await customerService.GetCustomerByEmail(loginDto.Email);
+            try
+            {
+                // Find user by email
+                var user = await customerService.GetCustomerByEmail(loginDto.Email);
 
-            // if user is not found
-            if (user == null)
-            {
-                return Unauthorized();
-            }
+                // if user is not found
+                if (user == null)
+                {
+                    return Unauthorized(new { message = "Invalid email or password" });
+                }
 
-            // Check if password is correct
-            if (user.Password == loginDto.Password)
-            {
-                return StatusCode(200, new
+                // Check if password is correct
+                if (user.Password == loginDto.Password)
                 {
-                    token = jwtGenerator.GenerateToken(user)
-                });
+                    return Ok(new
+                    {
+                        token = jwtGenerator.GenerateToken(user),
+                        customerId = user.Id
+                    });
+                }
+                else
+                {
+                    return Unauthorized(new { message = "Invalid email or password" });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return StatusCode(200, new
-                {
-                    token = "Invalid credentials"
-                });
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { message = "An error occurred while logging in.", details = ex.Message });
             }
         }
     }

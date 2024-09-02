@@ -86,6 +86,7 @@ namespace KrispyKreme.Application.Services.Implementation
             var customer = await _customerRepository.GetByEmailAsync(email);
             return new CustomerDto
             {
+                Id = customer.Id,
                 Name = customer.Name,
                 Email = customer.Email,
                 Address = customer.Address,

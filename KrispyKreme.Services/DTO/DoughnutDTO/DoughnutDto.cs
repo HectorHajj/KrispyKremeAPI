@@ -1,4 +1,4 @@
-﻿namespace KrispyKreme.Application.DTO
+﻿namespace KrispyKreme.Application.DTO.DoughnutDTO
 {
     public class DoughnutDto
     {

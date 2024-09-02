@@ -2,6 +2,7 @@
 using KrispyKreme.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace KrispyKremeAPI.Controllers
 {
@@ -28,8 +29,16 @@ namespace KrispyKremeAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetSaleDto>>> GetAllSales()
         {
-            var sales = await _saleService.GetAllSalesAsync();
-            return Ok(sales);
+            try
+            {
+                var sales = await _saleService.GetAllSalesAsync();
+                return Ok(sales);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { message = "An error occurred while retrieving sales.", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -41,12 +50,20 @@ namespace KrispyKremeAPI.Controllers
         [Authorize]
         public async Task<ActionResult<GetSaleDto>> GetSaleById(int id)
         {
-            var sale = await _saleService.GetSaleByIdAsync(id);
-            if (sale == null)
+            try
             {
-                return NotFound();
+                var sale = await _saleService.GetSaleByIdAsync(id);
+                if (sale == null)
+                {
+                    return NotFound(new { message = "Sale not found." });
+                }
+                return Ok(sale);
             }
-            return Ok(sale);
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { message = "An error occurred while retrieving the sale.", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -63,14 +80,22 @@ namespace KrispyKremeAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdSale = await _saleService.AddSaleAsync(saleDto);
-
-            if (createdSale == null)
+            try
             {
-                return BadRequest();
-            }
+                var createdSale = await _saleService.AddSaleAsync(saleDto);
 
-            return Ok(new { message = "Sale created successfully", sale = createdSale });
+                if (createdSale == null)
+                {
+                    return BadRequest(new { message = "Failed to create sale." });
+                }
+
+                return Ok(new { message = "Sale created successfully", sale = createdSale });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { message = "An error occurred while creating the sale.", details = ex.Message });
+            }
         }
     }
 }

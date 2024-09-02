@@ -1,4 +1,4 @@
-﻿using KrispyKreme.Application.DTO;
+﻿using KrispyKreme.Application.DTO.DoughnutDTO;
 using KrispyKreme.Data.Entities;
 using KrispyKreme.Data.Repositories;
 
@@ -28,11 +28,12 @@ namespace KrispyKreme.Application.Services.Implementation
             await _doughnutRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<DoughnutDto>> GetAllDoughnutsAsync()
+        public async Task<IEnumerable<GetDoughnutDto>> GetAllDoughnutsAsync()
         {
             var doughnuts = await _doughnutRepository.GetAllAsync();
-            return doughnuts.Select(d => new DoughnutDto
+            return doughnuts.Select(d => new GetDoughnutDto
             {
+                Id = d.Id,
                 Name = d.Name
             });
         }

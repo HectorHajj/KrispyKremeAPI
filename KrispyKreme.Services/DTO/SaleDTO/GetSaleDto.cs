@@ -2,6 +2,7 @@
 {
     public class GetSaleDto
     {
+        public int Id { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public string DoughnutName { get; set; }

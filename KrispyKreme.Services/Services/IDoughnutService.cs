@@ -1,4 +1,4 @@
-﻿using KrispyKreme.Application.DTO;
+﻿using KrispyKreme.Application.DTO.DoughnutDTO;
 
 namespace KrispyKreme.Application.Services
 {
@@ -6,7 +6,7 @@ namespace KrispyKreme.Application.Services
     {
         Task AddDoughnutAsync(DoughnutDto doughnutDto);
         Task DeleteDoughnutAsync(int id);
-        Task<IEnumerable<DoughnutDto>> GetAllDoughnutsAsync();
+        Task<IEnumerable<GetDoughnutDto>> GetAllDoughnutsAsync();
         Task<DoughnutDto> GetDoughnutByIdAsync(int id);
         Task UpdateDoughnutAsync(DoughnutDto doughnutDto);
     }
