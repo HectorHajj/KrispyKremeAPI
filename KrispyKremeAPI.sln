@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrispyKreme.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrispyKreme.Data", "KrispyKreme.Data\KrispyKreme.Data.csproj", "{E8C13157-1B04-41AA-85A8-6C9B83B0CB45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{166C4435-21ED-4F86-928A-51CD1F3E40D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{E8C13157-1B04-41AA-85A8-6C9B83B0CB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8C13157-1B04-41AA-85A8-6C9B83B0CB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8C13157-1B04-41AA-85A8-6C9B83B0CB45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{166C4435-21ED-4F86-928A-51CD1F3E40D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{166C4435-21ED-4F86-928A-51CD1F3E40D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{166C4435-21ED-4F86-928A-51CD1F3E40D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{166C4435-21ED-4F86-928A-51CD1F3E40D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

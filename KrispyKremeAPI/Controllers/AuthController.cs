@@ -33,6 +33,9 @@ namespace KrispyKreme.API.Controllers
         /// <param name="customerDto">The customer data transfer object.</param>
         /// <returns>An <see cref="ActionResult"/> indicating the result of the operation.</returns>
         [HttpPost("register")]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult> Register(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -63,6 +66,9 @@ namespace KrispyKreme.API.Controllers
         /// <param name="loginDto">The login data transfer object.</param>
         /// <returns>An <see cref="ActionResult"/> containing the JWT token if successful.</returns>
         [HttpPost("login")]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
         {
             try

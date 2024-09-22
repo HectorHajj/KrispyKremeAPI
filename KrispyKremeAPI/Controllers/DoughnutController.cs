@@ -25,8 +25,12 @@ namespace KrispyKreme.API.Controllers
         /// Gets all doughnuts.
         /// </summary>
         /// <returns>A list of doughnuts.</returns>
+        /// <response code="200">Returns the list of doughnuts.</response>
+        /// <response code="500">If an error occurs while retrieving doughnuts.</response>
         [HttpGet]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<GetDoughnutDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(object), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<IEnumerable<GetDoughnutDto>>> GetAllDoughnuts()
         {
             try
